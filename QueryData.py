@@ -29,6 +29,7 @@ class Process:
         self.subjects = []
         self.events = []
         self.additional_info = {}
+        self.authors_and_defendants = []
 
     def __repr__(self):
         return f"Process{{ number={self.number}, author={self.author}, defendant={self.defendant}, subject={self.subject}, last_event={self.last_event}, params={self.params} }}"
@@ -38,9 +39,12 @@ class Process:
 
     def add_event(self, event):
         self.events.append(event)
-        
+
     def add_additional_info(self, key, value):
         self.additional_info[key] = value
+
+    def add_authors_and_defendants(self, author, defendant):
+        self.authors_and_defendants.append((author, defendant))
 
 class Party:
     def __init__(self, name, doc, params):

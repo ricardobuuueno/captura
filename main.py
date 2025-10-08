@@ -99,7 +99,7 @@ def enrich_processes_with_details(search_results):
                         
                         if response.status_code == 200:
                             soup = BeautifulSoup(response.content, 'html.parser')
-                            #print(soup.prettify())
+                            print(soup.prettify())
                             
                             #Assuntos
                             fieldsets = soup.find_all("fieldset", class_="infraFieldset", id="fldAssuntos")
@@ -122,7 +122,25 @@ def enrich_processes_with_details(search_results):
                                         #print(subject)
                                         
                                     #break
-                            
+                                    
+                            #Partes e Representantes
+                            fieldset = soup.find("fieldset", class_="infraFieldset", id="fldPartes")
+                            #print(fieldset)
+                            table = fieldset.find("table", class_="infraTable")
+                            if table:
+                                #print(table)
+                                for row in table.find_all("tr"):
+                                    cols = row.find_all("td")
+                                    if len(cols) == 0:
+                                        continue
+                                    
+                                    author = cols[0].get_text(strip=True) if len(cols) > 0 else ''
+                                    defendant = cols[1].get_text(strip=True) if len(cols) > 1 else ''
+                                    
+                                    process.add_authors_and_defendants(author, defendant)
+                                    print(".", end="", flush=True)
+
+
                             #Informações Adicionais
                             fieldset = soup.find("fieldset", class_="infraFieldset", id="fldInformacoesAdicionais")
                             #print(fieldset)
@@ -177,7 +195,8 @@ def main():
     
     print("\n[+] Initiating...", end="", flush=True)
     
-    search_results = retrieve_parties(["ADILSON DA SILVA", "JOÂO DA SILVA MORAES","RICARDO DE JESUS","SERGIO FIRMINO DA SILVA","HELENA FARIAS DE LIMA","PAULO SALIM MALUF","PEDRO DE SÁ"])
+    #search_results = retrieve_parties(["ADILSON DA SILVA", "JOÂO DA SILVA MORAES","RICARDO DE JESUS","SERGIO FIRMINO DA SILVA","HELENA FARIAS DE LIMA","PAULO SALIM MALUF","PEDRO DE SÁ"])
+    search_results = retrieve_parties(["RICARDO DE JESUS"])
 
     retrieve_party_processes(search_results)
 

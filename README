@@ -1,0 +1,16 @@
+1. Baixar o projeto do github
+
+    > git clone https://github.com/ricardobuuueno/captura.git
+
+2. Acessar a pasta do projeto no terminal e criar e ativar o ambiente virtual
+
+    > python -m venv capenv
+    > .\capenv\Scripts\Activate.ps1 (ou o script mais apropriado para o seu ambiente)
+
+3. Instalar pacotes no ambiente virtual
+
+    > pip install -r requirements.txt
+
+4. Executar script de captura de dados
+
+    > python .\main.py
