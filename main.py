@@ -47,13 +47,13 @@ def retrieve_parties(names):
                     
                 search_results.append(search)
                 #print(search)
-        break
+        #break
                 
     return search_results
                 
                 
 def retrieve_party_processes(search_results):
-        
+    print("\n[+] Retrieving processes", end="", flush=True)        
     if search_results:
         for search in search_results:
             for party in search.parties:
@@ -83,10 +83,10 @@ def retrieve_party_processes(search_results):
                                 party.add_process(process)
                                 print(".", end="", flush=True)
                                 #print(process)                    
-                    break
+                    #break
         
 def enrich_processes_with_details(search_results):        
-        
+    print("\n[+] Enriching processes with details", end="", flush=True)    
     if search_results:
         for search in search_results:
             for party in search.parties:
@@ -121,15 +121,30 @@ def enrich_processes_with_details(search_results):
                                         print(".", end="", flush=True)
                                         #print(subject)
                                         
-                                    break                                    
+                                    #break
                             
                             #Informações Adicionais
-                            fieldsets = soup.find_all("fieldset", class_="infraFieldset", id="fldInformacoesAdicionais")
-                            #print(fieldsets)
-                            for fieldset in fieldsets:
-                                #print(fieldset)
-                                table = fieldset.find("table", class_="infraTable")
-                            
+                            fieldset = soup.find("fieldset", class_="infraFieldset", id="fldInformacoesAdicionais")
+                            #print(fieldset)
+                            table = fieldset.find("table")
+                            if table:
+                                #print(table)
+                                key = ""
+                                value = ""
+                                for i, label in enumerate(table.find_all("label")):
+                                    #print(label)
+                                    if i % 2 == 0:
+                                        key = label.get_text(strip=True)
+                                    else:
+                                        value = label.get_text(strip=True)
+                                        
+                                    if key and value:
+                                        process.add_additional_info(key, value)
+                                        print(".", end="", flush=True)
+                                        #print(f"{key}: {value}")
+                                        key = ""
+                                        value = ""
+                                    
                             #Eventos
                             tables = soup.find_all("table", class_="infraTable")
                             for table in tables:
@@ -149,7 +164,7 @@ def enrich_processes_with_details(search_results):
                                         print(".", end="", flush=True)
                                         #print(event)
                             
-                        break
+                        #break
 
 def export_json(query_results):
     print("\n[+] Exporting JSON file")
