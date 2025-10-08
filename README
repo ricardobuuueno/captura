@@ -22,3 +22,5 @@
     Options:
     -h, --help Show this help message and exit
     -d, --database Save results to SQLite database
+
+6. Após a execução, o resultado estará em um arquivo chamado output.json (no mesmo diretório da aplicação), e no banco de dados, caso essa opção tenha sido escolhida (o nome padrão do banco de dados é captura.db, também no mesmo diretório da aplicação).
