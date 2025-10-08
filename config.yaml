@@ -1,0 +1,4 @@
+# Basic configuration file
+database: captura.db
+search_url: "https://eproc-consulta-publica-1g.tjmg.jus.br/eproc/externo_controlador.php?acao=processo_consulta_publica"
+domain: https://eproc-consulta-publica-1g.tjmg.jus.br/eproc/
